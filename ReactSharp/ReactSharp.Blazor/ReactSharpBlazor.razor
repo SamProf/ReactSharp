@@ -1,3 +1,11 @@
 ﻿@inherits BaseReactSharpBlazor
 
+@if (Prerender)
+{
+    <div class="react-sharp-blazor-prerender" @ref="@PrerenderRef">
+        @((MarkupString) prerenderData)
+    </div>
+}
+
+
 <div @ref="@Ref"></div>

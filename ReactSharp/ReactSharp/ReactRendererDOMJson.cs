@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
@@ -7,48 +8,88 @@ namespace ReactSharp
 {
     public class ReactRendererDOMJson : IReactRendererDOM
     {
-        private JsonTextWriter writer;
+        public JsonTextWriter Writer { get; private set; }
+        public StringWriter StringWriter { get; private set; }
         private long lastId = 0;
 
-        public ReactRendererDOMJson(TextWriter textWriter)
+        
+
+        public ReactRendererDOMJson()
         {
-            this.writer = new JsonTextWriter(textWriter);
             // writer.Formatting = Formatting.Indented;
         }
 
         public void Start()
         {
-            writer.WriteStartObject();
-            writer.WritePropertyName("c");
-            writer.WriteStartArray();
+            StringWriter = new StringWriter();
+            Writer = new JsonTextWriter(StringWriter);
+            
+            Writer.WriteStartObject();
+            Writer.WritePropertyName("c");
+            Writer.WriteStartArray();
         }
 
         public void End()
         {
-            writer.WriteEndArray();
-            writer.WriteEndObject();
+            Writer.WriteEndArray();
+            Writer.WriteEndObject();
         }
 
+
+
+        protected void ApplyProps(IEnumerable<KeyValuePair<string, object>> props)
+        {
+            if (props.Any())
+            {
+                Writer.WritePropertyName("a");
+                Writer.WriteStartObject();
+                foreach (var prop in props)
+                {
+                    Writer.WritePropertyName(prop.Key);
+                    if (prop.Value is Delegate)
+                    {
+                        Writer.WriteStartObject();
+                        Writer.WritePropertyName("e");
+                        Writer.WriteValue(1);
+                        Writer.WriteEndObject();
+                    }
+                    else
+                    {
+                        Writer.WriteValue(prop.Value?.ToString());
+                    }
+                    
+                }
+
+                Writer.WriteEndObject();
+            }
+        }
+        
         public long CreateElement(string type, IEnumerable<KeyValuePair<string, object>> props, long parentDomId,
             long beforeDomId)
         {
             var id = ++lastId;
 
-            writer.WriteStartObject();
+            Writer.WriteStartObject();
 
-            writer.WritePropertyName("c");
-            writer.WriteValue(1);
+            Writer.WritePropertyName("c");
+            Writer.WriteValue(1);
 
-            writer.WritePropertyName("t");
-            writer.WriteValue(type);
+            Writer.WritePropertyName("t");
+            Writer.WriteValue(type);
 
-            writer.WritePropertyName("i");
-            writer.WriteValue(id);
+            Writer.WritePropertyName("i");
+            Writer.WriteValue(id);
 
             if (parentDomId != 0)
             {
-                writer.WritePropertyName("p");
-                writer.WriteValue(parentDomId);
+                Writer.WritePropertyName("p");
+                Writer.WriteValue(parentDomId);
+            }
+            
+            if (beforeDomId != 0)
+            {
+                Writer.WritePropertyName("b");
+                Writer.WriteValue(beforeDomId);
             }
 
             // if (afterDomId != 0)
@@ -57,102 +98,89 @@ namespace ReactSharp
             //     writer.WriteValue(afterDomId);
             // }
 
-            if (props.Any())
-            {
-                writer.WritePropertyName("a");
-                writer.WriteStartObject();
-                foreach (var prop in props)
-                {
-                    writer.WritePropertyName(prop.Key);
-                    writer.WriteValue(prop.Value?.ToString());
-                }
+            ApplyProps(props);
 
-                writer.WriteEndObject();
-            }
-
-            writer.WriteEndObject();
+            Writer.WriteEndObject();
 
             return id;
         }
 
-        public long CreateText(string value, long parentDomId)
+        public long CreateText(string value, long parentDomId, long beforeDomId)
         {
             var id = ++lastId;
 
-            writer.WriteStartObject();
+            Writer.WriteStartObject();
 
-            writer.WritePropertyName("c");
-            writer.WriteValue(2);
+            Writer.WritePropertyName("c");
+            Writer.WriteValue(2);
 
-            writer.WritePropertyName("v");
-            writer.WriteValue(value);
+            Writer.WritePropertyName("v");
+            Writer.WriteValue(value);
 
-            writer.WritePropertyName("i");
-            writer.WriteValue(id);
+            Writer.WritePropertyName("i");
+            Writer.WriteValue(id);
 
-            writer.WritePropertyName("p");
-            writer.WriteValue(parentDomId);
+            if (parentDomId != 0)
+            {
+                Writer.WritePropertyName("p");
+                Writer.WriteValue(parentDomId);
+            }
+            
+            if (beforeDomId != 0)
+            {
+                Writer.WritePropertyName("b");
+                Writer.WriteValue(beforeDomId);
+            }
 
             // writer.WritePropertyName("n");
             // writer.WriteValue(afterDomId);
 
-            writer.WriteEndObject();
+            Writer.WriteEndObject();
 
             return id;
         }
 
         public void Remove(long id)
         {
-            writer.WriteStartObject();
+            Writer.WriteStartObject();
 
-            writer.WritePropertyName("c");
-            writer.WriteValue(3);
+            Writer.WritePropertyName("c");
+            Writer.WriteValue(3);
 
-            writer.WritePropertyName("i");
-            writer.WriteValue(id);
+            Writer.WritePropertyName("i");
+            Writer.WriteValue(id);
 
-            writer.WriteEndObject();
+            Writer.WriteEndObject();
         }
 
         public void SetProps(long id, Dictionary<string, object> props)
         {
-            writer.WriteStartObject();
+            Writer.WriteStartObject();
 
-            writer.WritePropertyName("c");
-            writer.WriteValue(4);
+            Writer.WritePropertyName("c");
+            Writer.WriteValue(4);
 
-            writer.WritePropertyName("i");
-            writer.WriteValue(id);
+            Writer.WritePropertyName("i");
+            Writer.WriteValue(id);
 
-            if (props.Any())
-            {
-                writer.WritePropertyName("a");
-                writer.WriteStartObject();
-                foreach (var prop in props)
-                {
-                    writer.WritePropertyName(prop.Key);
-                    writer.WriteValue(prop.Value?.ToString());
-                }
+            ApplyProps(props);
 
-                writer.WriteEndObject();
-            }
-
-            writer.WriteEndObject();
+            Writer.WriteEndObject();
         }
 
         public void SetText(long id, string value)
         {
-            writer.WriteStartObject();
+            Writer.WriteStartObject();
 
-            writer.WritePropertyName("c");
-            writer.WriteValue(5);
+            Writer.WritePropertyName("c");
+            Writer.WriteValue(5);
 
-            writer.WritePropertyName("v");
-            writer.WriteValue(value);
+            Writer.WritePropertyName("v");
+            Writer.WriteValue(value);
 
-            writer.WritePropertyName("i");
-            writer.WriteValue(id);
-            writer.WriteEndObject();
+            Writer.WritePropertyName("i");
+            Writer.WriteValue(id);
+            Writer.WriteEndObject();
         }
     }
 }

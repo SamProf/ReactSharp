@@ -3,19 +3,20 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:63081",
-      "sslPort": 44324
+      "applicationUrl": "http://localhost:62646",
+      "sslPort": 44378
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
+      "launchUrl": "Todo",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "ReactSharp.Demo.ServerApp": {
+    "ReactSharp.Blazor.Demo.ServerApp": {
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:5001;http://localhost:5000",

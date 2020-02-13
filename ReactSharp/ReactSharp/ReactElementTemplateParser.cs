@@ -17,50 +17,6 @@ namespace ReactSharp
         static Regex containsAttributeRegex = new Regex("{(?<index>[0-9]+)}", RegexOptions.Compiled);
 
 
-        private static Dictionary<string, Type> components;
-        private static object syncObj = new object();
-
-        private static Type ResolveComponent(string tagName)
-        {
-            if (components == null)
-            {
-                lock (syncObj)
-                {
-                    if (components == null)
-                    {
-                        components = new Dictionary<string, Type>();
-                        foreach (var type in AppDomain.CurrentDomain.GetAssemblies()
-                            .SelectMany(i => i.GetTypes())
-                            .Where(i => i.IsSubclassOf(typeof(ReactComponent))))
-                        {
-                            components[type.Name] = type;
-                            components[type.FullName] = type;
-                        }
-                    }
-                }
-            }
-
-            try
-            {
-                Type t;
-                if (!components.TryGetValue(tagName, out t))
-                {
-                    t = Type.GetType(tagName);
-                }
-
-                if (t == null)
-                {
-                    throw new Exception($"Component {tagName} not found");
-                }
-
-                return t;
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-        }
-
         private static ReactElementTemplate ParseElement(XmlReader xmlReader)
         {
             if (xmlReader.NodeType != XmlNodeType.Element)
@@ -88,7 +44,8 @@ namespace ReactSharp
             }
             else
             {
-                template.Type.Evaluator = ReactValueEvaluatorFactory.CreateValue(ResolveComponent(tagName));
+                template.Type.Evaluator =
+                    ReactValueEvaluatorFactory.CreateValue(ReactComponentTypeResolver.ResolveComponent(tagName));
             }
 
             template.Children = new List<ReactElementTemplateChild>();

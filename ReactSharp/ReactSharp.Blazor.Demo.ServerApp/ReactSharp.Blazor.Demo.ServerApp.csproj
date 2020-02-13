@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ReactSharp.Blazor\ReactSharp.Blazor.csproj" />
+    <ProjectReference Include="..\ReactSharp.Demo\ReactSharp.Demo.csproj" />
     <ProjectReference Include="..\ReactSharp\ReactSharp.csproj" />
   </ItemGroup>
 

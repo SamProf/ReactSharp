@@ -3,6 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
+    <Title>ReactSharp - A C# library for building web user interfaces in Blazor</Title>
+    <Authors>Vladimir Samoilenko</Authors>
+    <Copyright>Vladimir Samoilenko</Copyright>
+    <PackageProjectUrl>https://github.com/SamProf/ReactSharp</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/SamProf/ReactSharp/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/SamProf/ReactSharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>react, blazor, web, framework, components</PackageTags>
   </PropertyGroup>
 
 

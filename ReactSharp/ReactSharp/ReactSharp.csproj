@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>ReactSharp - A C# library for building web user interfaces</Title>
+    <Authors>Vladimir Samoilenko</Authors>
+    <Copyright>Vladimir Samoilenko</Copyright>
+    <PackageProjectUrl>https://github.com/SamProf/ReactSharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SamProf/ReactSharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>react, blazor, web, framework, components</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

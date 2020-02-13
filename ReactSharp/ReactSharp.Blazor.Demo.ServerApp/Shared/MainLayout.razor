@@ -1,0 +1,45 @@
+﻿@inherits LayoutComponentBase
+
+<header>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <strong>React #</strong>
+            </a>
+            <a href="/Todo"  class="navbar-brand d-flex align-items-center">
+                <strong>Todo example</strong>
+            </a>
+
+            <a href="https://github.com/SamProf/ReactSharp" target="_blank" class="navbar-brand d-flex align-items-center">
+                <strong>GitHub</strong>
+            </a>
+
+            <a href="https://twitter.com/SamProf" target="_blank" class="navbar-brand d-flex align-items-center">
+                <strong>@@SamProf</strong>
+            </a>
+        </div>
+    </div>
+</header>
+
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <img src="/logo.png" alt="React #"/>
+            <p class="lead text-muted">ReactSharp - A C# library for building web user interfaces</p>
+            <p class="lead text-muted">React alternative to Blazor</p>
+            <p class="lead text-muted">Super Experimental</p>
+            @* <p> *@
+            @* <a href="#" class="btn btn-primary my-2">Main call to action</a> *@
+            @* <a href="#" class="btn btn-secondary my-2">Secondary action</a> *@
+            @* </p> *@
+        </div>
+    </section>
+
+    <div class="album py-5">
+        <div class="container">
+            @Body
+        </div>
+    </div>
+
+</main>

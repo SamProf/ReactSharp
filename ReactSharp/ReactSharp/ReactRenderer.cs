@@ -8,18 +8,20 @@ namespace ReactSharp
 {
     public class ReactRenderer
     {
-        public ReactNode Root { get; set; }
-        private object synObj = new object();
+        private readonly ReactRuntime _runtime;
 
-        public void Render(ReactElement element, IReactRendererDOM dom)
+        public ReactRenderer(ReactRuntime runtime)
         {
-            lock (synObj)
-            {
-                dom.Start();
-                long domId;
-                Root = RenderElement(element, Root, dom, 0, 0);
-                dom.End();
-            }
+            _runtime = runtime;
+        }
+
+
+        public ReactNode Render(ReactElement element, ReactNode nodeOld, IReactRendererDOM dom)
+        {
+            dom.Start();
+            var node = RenderElement(element, nodeOld, dom, 0, 0);
+            dom.End();
+            return node;
         }
 
 
@@ -54,33 +56,54 @@ namespace ReactSharp
         }
 
         protected List<ReactNode> RenderChildren(object childrenObj, List<ReactNode> childrenOld, IReactRendererDOM dom,
-            long parentDomId)
+            long parentDomId, long beforeDomId, out long firstDomId)
         {
+            long firstDomIdLocal = 0;
             var childrenNew = new List<ReactNode>();
             var index = 0;
             EnumerateChildren(childrenObj, childData =>
             {
                 var childOld = index < childrenOld.Count ? childrenOld[index] : null;
+                long childBeforeDomId = beforeDomId;
+                for (var i = index + 1; i < childrenOld.Count; i++)
+                {
+                    if (childrenOld[i].DomId != 0)
+                    {
+                        childBeforeDomId = childrenOld[i].DomId;
+                        break;
+                    }
+                }
+
                 if (childOld != null)
                 {
                     childrenOld[index] = null;
                 }
 
+                ReactNode node;
+
                 if (childData is ReactElement childElement)
                 {
-                    childrenNew.Add(RenderElement(childElement, childOld, dom, parentDomId, 0));
+                    node = RenderElement(childElement, childOld, dom, parentDomId, childBeforeDomId);
                 }
                 else
                 {
-                    childrenNew.Add(RenderText(childData, childOld, dom, parentDomId));
+                    node = (RenderText(childData, childOld, dom, parentDomId, childBeforeDomId));
+                }
+
+                childrenNew.Add(node);
+                if (firstDomIdLocal == 0)
+                {
+                    firstDomIdLocal = node.DomId;
                 }
 
                 index++;
             });
+            firstDomId = firstDomIdLocal;
             return childrenNew;
         }
 
-        protected ReactNode RenderText(object value, ReactNode nodeOld, IReactRendererDOM dom, long parentDomId)
+        protected ReactNode RenderText(object value, ReactNode nodeOld, IReactRendererDOM dom, long parentDomId,
+            long beforeDomId)
         {
             if (nodeOld != null)
             {
@@ -91,18 +114,17 @@ namespace ReactSharp
                 }
             }
 
-            var node = new ReactNode()
-            {
-                Data = value,
-            };
+            var node = ReactNode.Create(_runtime);
+            node.Data = value;
+            
             if (nodeOld == null)
             {
-                node.DomId = dom.CreateText(value?.ToString(), parentDomId);
+                node.DomId = dom.CreateText(value?.ToString(), parentDomId, beforeDomId);
             }
             else
             {
                 node.DomId = nodeOld.DomId;
-                if (!string.Equals(nodeOld.Data?.ToString() , node.Data?.ToString()))
+                if (!string.Equals(nodeOld.Data?.ToString(), node.Data?.ToString()))
                 {
                     dom.SetText(node.DomId, value?.ToString());
                 }
@@ -190,35 +212,31 @@ namespace ReactSharp
                     }
                 }
 
-                node = new ReactNode()
-                {
-                    DomId = domId,
-                    Data = element,
-                    Props = propsNew
-                };
+                node = ReactNode.Create(_runtime);
+                node.DomId = domId;
+                node.Data = element;
+                node.Props = propsNew;
             }
             else if (element.Type is Type componentType)
             {
                 var propsNew = element.Props;
                 if (nodeOld == null)
                 {
-                    node = new ReactNode()
-                    {
-                        Data = element,
-                        Component = (ReactComponent) Activator.CreateInstance(componentType),
-                        Props = propsNew
-                    };
+                    node = ReactNode.Create(_runtime);
+                    node.Data = element;
+                    node.Component = (ReactComponent) Activator.CreateInstance(componentType);
+                    node.Component.Node = node;
+                    node.Props = propsNew;
                     node.Component.SetProps(propsNew);
                     node.Component.ComponentWillMount();
                 }
                 else
                 {
-                    node = new ReactNode()
-                    {
-                        Data = element,
-                        Component = nodeOld.Component,
-                        Props = element.Props,
-                    };
+                    node = ReactNode.Create(_runtime);
+                    node.Data = element;
+                    node.Component = nodeOld.Component;
+                    node.Props = element.Props;
+                    node.Component.Node = node;
 
                     var propsChanhes = DiffProps(propsNew, nodeOld.Props);
                     if (propsChanhes.Any())
@@ -236,13 +254,17 @@ namespace ReactSharp
             {
                 if (element.Props.TryGetValue("Children", out var childrenObj))
                 {
-                    node.Children = RenderChildren(childrenObj, nodeOld?.Children ?? new List<ReactNode>(), dom, domId);
+                    long firstChildrenDomId;
+                    node.Children = RenderChildren(childrenObj, nodeOld?.Children ?? new List<ReactNode>(), dom, domId,
+                        0, out firstChildrenDomId);
                 }
             }
             else
             {
+                long firstChildrenDomId;
                 node.Children = RenderChildren(node.Component.Render(), nodeOld?.Children ?? new List<ReactNode>(), dom,
-                    parentDomId);
+                    parentDomId, beforeDomId, out firstChildrenDomId);
+                node.DomId = firstChildrenDomId;
             }
 
             return node;

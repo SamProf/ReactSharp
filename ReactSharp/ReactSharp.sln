@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.29721.120
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactSharp", "ReactSharp\ReactSharp.csproj", "{5EAB99B8-7B9E-4850-B774-A235AAF332BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactSharp.Demo.ServerApp", "ReactSharp.Demo.ServerApp\ReactSharp.Demo.ServerApp.csproj", "{7D6B6717-54F8-4E91-9962-A332AA57A444}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactSharp.Tests", "ReactSharp.Tests\ReactSharp.Tests.csproj", "{D6496E8C-4663-4C47-B8F8-233FEB00AAF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactSharp.Blazor", "ReactSharp.Blazor\ReactSharp.Blazor.csproj", "{A839D00D-E8D3-417B-A271-699D396B056F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactSharp.Blazor", "ReactSharp.Blazor\ReactSharp.Blazor.csproj", "{A839D00D-E8D3-417B-A271-699D396B056F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactSharp.Demo", "ReactSharp.Demo\ReactSharp.Demo.csproj", "{AD0D42F5-7A51-48C5-9B1B-F7B5356455C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactSharp.Blazor.Demo.ServerApp", "ReactSharp.Blazor.Demo.ServerApp\ReactSharp.Blazor.Demo.ServerApp.csproj", "{1F543956-9D22-471F-9BF7-97D8AAAFD749}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +23,6 @@ Global
 		{5EAB99B8-7B9E-4850-B774-A235AAF332BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EAB99B8-7B9E-4850-B774-A235AAF332BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EAB99B8-7B9E-4850-B774-A235AAF332BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D6B6717-54F8-4E91-9962-A332AA57A444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D6B6717-54F8-4E91-9962-A332AA57A444}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D6B6717-54F8-4E91-9962-A332AA57A444}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D6B6717-54F8-4E91-9962-A332AA57A444}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D6496E8C-4663-4C47-B8F8-233FEB00AAF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D6496E8C-4663-4C47-B8F8-233FEB00AAF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6496E8C-4663-4C47-B8F8-233FEB00AAF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +31,14 @@ Global
 		{A839D00D-E8D3-417B-A271-699D396B056F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A839D00D-E8D3-417B-A271-699D396B056F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A839D00D-E8D3-417B-A271-699D396B056F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD0D42F5-7A51-48C5-9B1B-F7B5356455C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD0D42F5-7A51-48C5-9B1B-F7B5356455C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD0D42F5-7A51-48C5-9B1B-F7B5356455C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD0D42F5-7A51-48C5-9B1B-F7B5356455C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F543956-9D22-471F-9BF7-97D8AAAFD749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F543956-9D22-471F-9BF7-97D8AAAFD749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F543956-9D22-471F-9BF7-97D8AAAFD749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F543956-9D22-471F-9BF7-97D8AAAFD749}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

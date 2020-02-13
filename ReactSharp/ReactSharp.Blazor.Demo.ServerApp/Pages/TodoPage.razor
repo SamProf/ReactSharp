@@ -1,0 +1,8 @@
+﻿@page "/Todo"
+
+<ReactSharpBlazor Prerender="true" Element="@_reactElement"></ReactSharpBlazor>
+
+@code
+{
+    ReactElement _reactElement = new ReactElement($@"<Todo/>");
+}

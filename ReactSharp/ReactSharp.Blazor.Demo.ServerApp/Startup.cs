@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ReactSharp.Demo.ServerApp.Data;
 
-namespace ReactSharp.Demo.ServerApp
+
+namespace ReactSharp.Blazor.Demo.ServerApp
 {
     public class Startup
     {
@@ -28,7 +28,7 @@ namespace ReactSharp.Demo.ServerApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+            ReactComponentTypeResolver.RegisterAssembly(typeof(ReactSharp.Demo.App).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

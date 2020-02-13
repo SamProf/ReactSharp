@@ -19,7 +19,7 @@ namespace ReactSharp.Tests
         [Test]
         public void TestRenderer()
         {
-            var render = new ReactRenderer();
+            var render = new ReactRenderer(null);
             var element = new ReactElement($@"
 
 
@@ -36,29 +36,34 @@ namespace ReactSharp.Tests
 
 
 ");
-            var writer = new StringWriter();
-            var dom = new ReactRendererDOMJson(writer);
+            var dom = new ReactRendererDOMJson();
             var sw = Stopwatch.StartNew();
             for (int i = 0; i < 100; i++)
             {
-                render.Render(element, dom);
+                render.Render(element, null, dom);
             }
+
             Console.WriteLine(sw.Elapsed);
-            var c = writer.ToString();
-            Console.WriteLine(c.Length);
-            Console.WriteLine(c);
-            
+            Console.WriteLine(dom.StringWriter.ToString().Length);
+            Console.WriteLine(dom.StringWriter.ToString());
+        }
+
+
+
+        protected void TestClick()
+        {
             
         }
         
-        [Test]
         
+        [Test]
         public void TestParser()
         {
             var template = ReactElementTemplateParser.Get($@"
-<Component1>
+<div>
 
-<div class='{123}'>
+
+<div class='{123}' click='{new Action(()=>{TestClick();})}'>
 
 {123} 
 
@@ -70,7 +75,7 @@ namespace ReactSharp.Tests
 
 </div>
 
-</Component1>");
+</div>");
 
             Console.WriteLine(template);
         }
