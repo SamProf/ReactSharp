@@ -1,6 +1,9 @@
 # React#
 
 ## ReactSharp - A C# library for building web user interfaces
+## React alternative to Blazor
+## Super Experimental - super unstable
+
 [![NuGet](https://img.shields.io/nuget/v/ReactSharp.svg)](https://www.nuget.org/packages/ReactSharp.Blazor/)
 [![Gitter](https://badges.gitter.im/ReactSharp/community.svg)](https://gitter.im/MatBlazor/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![GitHub Stars](https://img.shields.io/github/stars/SamProf/ReactSharp.svg)](https://github.com/SamProf/ReactSharp/stargazers)
