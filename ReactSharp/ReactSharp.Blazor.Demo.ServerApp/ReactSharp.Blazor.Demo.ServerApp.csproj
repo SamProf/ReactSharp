@@ -2,12 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ReactSharp.Blazor\ReactSharp.Blazor.csproj" />
     <ProjectReference Include="..\ReactSharp.Demo\ReactSharp.Demo.csproj" />
     <ProjectReference Include="..\ReactSharp\ReactSharp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
   </ItemGroup>
 
 </Project>
