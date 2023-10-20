@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Title>ReactSharp - A C# library for building web user interfaces</Title>
     <Authors>Vladimir Samoilenko</Authors>
     <Copyright>Vladimir Samoilenko</Copyright>
@@ -10,9 +9,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>react, blazor, web, framework, components</PackageTags>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
-
 </Project>
