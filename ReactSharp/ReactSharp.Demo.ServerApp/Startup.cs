@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 
-namespace ReactSharp.Blazor.Demo.ServerApp
+namespace ReactSharp.Demo.ServerApp
 {
     public class Startup
     {

@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ReactSharp.Blazor.Demo.ServerApp
+namespace ReactSharp.Demo.ServerApp
 {
     public class Program
     {

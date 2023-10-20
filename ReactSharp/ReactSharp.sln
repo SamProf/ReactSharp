@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactSharp.Blazor", "ReactS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactSharp.Demo", "ReactSharp.Demo\ReactSharp.Demo.csproj", "{AD0D42F5-7A51-48C5-9B1B-F7B5356455C2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactSharp.Blazor.Demo.ServerApp", "ReactSharp.Blazor.Demo.ServerApp\ReactSharp.Blazor.Demo.ServerApp.csproj", "{1F543956-9D22-471F-9BF7-97D8AAAFD749}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactSharp.Demo.ServerApp", "ReactSharp.Demo.ServerApp\ReactSharp.Demo.ServerApp.csproj", "{1F543956-9D22-471F-9BF7-97D8AAAFD749}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
