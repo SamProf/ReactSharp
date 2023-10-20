@@ -1,9 +1,9 @@
-﻿FROM mcr.microsoft.com/dotnet/core/aspnet:6.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["ReactSharp.Blazor.Demo.ServerApp/ReactSharp.Blazor.Demo.ServerApp.csproj", "ReactSharp.Blazor.Demo.ServerApp/"]
 COPY ["ReactSharp.Blazor/ReactSharp.Blazor.csproj", "ReactSharp.Blazor/"]
@@ -15,7 +15,7 @@ WORKDIR "/src/ReactSharp.Blazor.Demo.ServerApp"
 RUN dotnet build "ReactSharp.Blazor.Demo.ServerApp.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ReactSharp.Blazor.Demo.ServerApp.csproj" -c Release -o /app/publish
+RUN dotnet publish "ReactSharp.Blazor.Demo.ServerApp.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
